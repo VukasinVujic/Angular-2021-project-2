@@ -9,6 +9,12 @@ import { Recipe } from '../recipe.model';
 export class RecipeDetailComponent implements OnInit {
   @Input() recipe: Recipe;
 
+  showValue = false;
+
+  toggleButton() {
+    this.showValue = !this.showValue;
+  }
+
   constructor() {}
 
   ngOnInit(): void {}
