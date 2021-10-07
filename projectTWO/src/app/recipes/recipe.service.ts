@@ -1,20 +1,27 @@
-import { EventEmitter } from '@angular/core';
+import { EventEmitter, Injectable } from '@angular/core';
+import { Ingredient } from '../shared/ingredient.model';
 
 import { Recipe } from './recipe.model';
+import { ShoppingListService } from '../shopping-list/shopping-list.service';
 
+@Injectable()
 export class RecipeService {
   recipeSelected = new EventEmitter<Recipe>();
 
+  constructor(private slService: ShoppingListService) {}
+
   private recipes: Recipe[] = [
     new Recipe(
-      'A test recipe 1',
-      'this is a test 1',
-      'https://www.maxpixel.net/static/photo/1x/Meat-Power-Recipe-Food-Dishes-Pork-1459693.jpg'
+      'Pljeska',
+      '10 upola sa lukom',
+      'https://www.maxpixel.net/static/photo/1x/Meat-Power-Recipe-Food-Dishes-Pork-1459693.jpg',
+      [new Ingredient('Meat', 1), new Ingredient('French Fires', 20)]
     ),
     new Recipe(
-      'A test recipe 2',
-      'this is a test 2',
-      'https://www.maxpixel.net/static/photo/1x/Meat-Power-Recipe-Food-Dishes-Pork-1459693.jpg'
+      'Burek',
+      'sa mesom',
+      'https://www.maxpixel.net/static/photo/1x/Meat-Power-Recipe-Food-Dishes-Pork-1459693.jpg',
+      [new Ingredient('Lebac', 2), new Ingredient('Meat', 1)]
     ),
   ];
 
@@ -27,5 +34,9 @@ export class RecipeService {
 
   onRecipeSelected(recipe: Recipe) {
     this.recipeWasSelected.emit(recipe);
+  }
+
+  addIngredientsToShoppingList(ingredients: Ingredient[]) {
+    this.slService.addIngredients(ingredients);
   }
 }
